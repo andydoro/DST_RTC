@@ -1,0 +1,12 @@
+#######################################
+# Syntax Coloring Map For DST_RTC
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+DST_RTC KEYWORD1
+
+checkDST KEYWORD2
+calculateTime KEYWORD2
