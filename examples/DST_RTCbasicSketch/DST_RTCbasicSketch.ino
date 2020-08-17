@@ -3,16 +3,33 @@
 #include "RTClib.h"
 #include "DST_RTC.h"
 
+#if defined(ARDUINO_SAMD_ZERO) && defined(SERIAL_PORT_USBVIRTUAL)
+// Required for Serial on Zero based boards
+#define Serial SERIAL_PORT_USBVIRTUAL
+#endif
 
 RTC_DS1307 rtc; // clock object
 
 DST_RTC dst_rtc; // DST object
 
+// Define US or EU rules for DST comment out as required. More countries could be added with different rules in DST_RTC.cpp
+const char rulesDST[] = "US"; // US DST rules
+// const char rulesDST[] = "EU";   // EU DST rules
+
 void setup() {
   Serial.begin(115200);
-  // put your setup code here, to run once:
+
   Wire.begin();
   rtc.begin();
+
+
+  /*
+    This line sets the RTC with an explicit date & time (standard time - not DST), for example to set
+    March 28, 2020 at 23:58:5 you would call:
+    // rtc.adjust(DateTime(2020, 3, 28, 23, 58, 5));
+    If used load the sketch a second time with this line commented out or the RTC will reset to
+    this time on power up or reset.
+  */
 
   if (! rtc.isrunning()) {
     Serial.println("RTC is NOT running!");
@@ -30,7 +47,7 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+
   DateTime standardTime = rtc.now();
 
   Serial.println("Standard Time");
@@ -41,8 +58,7 @@ void loop() {
   Serial.println("time adjusted for Daylight Saving Time");
   printTheTime(theTime);
 
-  delay(2000);
-
+  delay(1000); // 1 second
 }
 
 
@@ -61,4 +77,3 @@ void printTheTime(DateTime theTimeP) {
   Serial.print(theTimeP.second(), DEC);
   Serial.println();
 }
-

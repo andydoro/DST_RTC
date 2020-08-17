@@ -6,7 +6,8 @@
 # Datatypes (KEYWORD1)
 #######################################
 
-DST_RTC KEYWORD1
+DST_RTC			KEYWORD1
 
-checkDST KEYWORD2
-calculateTime KEYWORD2
+checkDST		KEYWORD2
+calculateTime	KEYWORD2
+rulesDST		KEYWORD2
