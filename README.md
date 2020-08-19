@@ -13,10 +13,9 @@ of writing DST is observed between the second Sunday in March and the first Sund
 The rules for DST vary by country and territory.
 https://en.wikipedia.org/wiki/Daylight_saving_time_by_country
 
-This method checks whether its 2am or not when the time change officially occurs (this addition by Peter Bradley).   
+This method checks whether its 2am or not when the time change officially occurs (this addition by Peter Bradley). 
+
 Addition Peter Bradley
-Added 2:00 AM time change for the USA.
-In the European Union, Summer Time begins and ends at 1:00 a.m. Universal Time (Greenwich Mean Time). 
-For most of Europe DST usually begins on the last Sunday of March at 2:00 AM local time and ends on 
-the last Sunday of October at 2:00 AM local time.
-The last Sunday of the month of March and October must always be on or after the 25th.
+- Added 2:00 AM time change for the USA.
+- In the European Union, Summer Time begins and ends at 1:00 a.m. Universal Time (Greenwich Mean Time). 
+- For most of Europe DST usually begins on the last Sunday of March at 2:00 AM local time and ends on the last Sunday of October at 2:00 AM local time. The last Sunday of the month of March and October must always be on or after the 25th.
