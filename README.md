@@ -13,7 +13,7 @@ of writing DST is observed between the second Sunday in March and the first Sund
 The rules for DST vary by country and territory.  
 https://en.wikipedia.org/wiki/Daylight_saving_time_by_country
 
-The new version requires explicit definition of whether to use US or EU rules.
+**The new version requires explicit definition of whether to use US or EU rules.**
 
 This method checks whether its 2am or not when the time change officially occurs (this addition by Peter Bradley). 
 
@@ -21,3 +21,13 @@ Addition Peter Bradley
 - Added 2:00 AM time change for the USA.
 - In the European Union, Summer Time begins and ends at 1:00 a.m. Universal Time (Greenwich Mean Time). 
 - For most of Europe DST usually begins on the last Sunday of March at 2:00 AM local time and ends on the last Sunday of October at 2:00 AM local time. The last Sunday of the month of March and October must always be on or after the 25th.
+
+## Installation
+### From the Library Manager
+1. Launch the Arduino IDE and navigate to *Sketch → Include Library → Manage Libraries*.
+2. In the library manager, scroll to *DST_RTC* or enter the name into the search field.
+3. Click on the library, then click on the Install button.
+
+### From the ZIP file
+1. Download the [ZIP file](https://github.com/andydoro/DST_RTC/archive/master.zip).
+2. Launch the Arduino IDE and navigate to *Sketch → Include Library → Add .ZIP Library...*. From the prompt, select the ZIP just downloaded.
