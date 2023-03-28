@@ -93,7 +93,7 @@ boolean DST_RTC::checkDST(DateTime RTCTime)
       if (RTCTime.dayOfTheWeek() == 0)   // if today is Sunday
       {
         if (previousSunday >= 25  // and it is also on or after 25th
-            && RTCTime.hour() <= 1)  // less than 2:00 AM for Europe
+            && RTCTime.hour() <= 0)  // less than 2:00 AM for Europe
           dst = true;
         else if (previousSunday < 25)   // it is not yet the last Sunday
           dst = true;
