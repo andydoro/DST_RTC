@@ -13,6 +13,11 @@ The library can accept different DST rulesets and currently is programmed for ei
 
 In version 1.1.1 this ruleset selection was implemented poorly and required explicit definition of either "US" or "EU" ruleset. The new implementation in 1.2.0 uses integers to choose rulesets and defaults to "0" for the US ruleset. "1" can be entered for the EU ruleset. Version 1.2.0 is therefore backwards compatible with version 1.1.0.
 
+- 0 - US - United States, default
+- 1 - EU - Central Europe
+- 2 - WE - Western Europe (Great Britain, Ireland and Portugal)
+- 3 - AU - Australia
+
 The US algorithm is programmed to observe Daylight Saving Time in (most of) the United States, where as of the time
 of writing DST is observed between the second Sunday in March and the first Sunday in November.
 
@@ -21,6 +26,8 @@ For most of Europe DST usually begins on the last Sunday of March at 2:00 AM loc
 The rules for DST vary by country and territory.
 https://en.wikipedia.org/wiki/Daylight_saving_time_by_country
 
+
+Western Europe and Austrailia DST rulesets contrubuted by [Peter Bradley](https://github.com/Gambalunga)
 
 Addition Peter Bradley
 - Added 2:00 AM time change for the USA.

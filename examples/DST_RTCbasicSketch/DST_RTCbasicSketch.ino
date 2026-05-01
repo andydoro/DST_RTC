@@ -12,7 +12,11 @@ RTC_DS3231 rtc;  // clock object with DS3231
 //RTC_DS1307 rtc;    // clock object with DS1307
 
 DST_RTC dst_rtc(0);  // DST object
-// Optional argument to define ruleset. 0 will mean using US DST rules, use 1 for EU. Other rulesets can be added in the future.
+// Optional argument to define ruleset
+//    0 - US - United States, default
+//    1 - EU - Central Europe
+//    2 - WE - Western Europe (Great Britain, Ireland and Portugal)
+//    3 - AU - Australia
 
 // The following code is deprecated. Library now defaults to US DST rules. Use 0 or 1 in setup() to use US or EU rules, respectively.
 // Define US or EU rules for DST comment out as required. More countries could be added with different rules in DST_RTC.cpp
