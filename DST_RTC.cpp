@@ -21,9 +21,9 @@
 #include "Arduino.h"
 #include "DST_RTC.h"
 
-DST_RTC::DST_RTC()
+DST_RTC::DST_RTC(byte rulesDST)
 {
-
+  _rulesDST = rulesDST;
 }
 
 boolean DST_RTC::checkDST(DateTime RTCTime)
@@ -33,46 +33,14 @@ boolean DST_RTC::checkDST(DateTime RTCTime)
   int previousSunday = RTCTime.day() - RTCTime.dayOfTheWeek();
 
   boolean dst = false; //Assume we're not in DST
-  if (strcmp(rulesDST, "US") == 0) {
-    // Serial.print("test of rulesDST: ");
-    // Serial.println(rulesDST);
-    if (RTCTime.month() > 3 && RTCTime.month() < 11) dst = true; //DST is happening in America!
-    //In the USA in March we are DST if the previous Sunday was on or after the 8th (and on or before the 14th).
-    if (RTCTime.month() == 3)
-    {
-      if (RTCTime.dayOfTheWeek() == 0) {  // if today is Sunday
-        if (previousSunday >= 8    // on or after 8th
-            && previousSunday <= 14     // but on or before 14th
-            && RTCTime.hour() >= 2)  // and at or after 2:00 AM
-          dst = true;
-        else if (previousSunday >= 15)  // it is a Sunday after the second Sunday
-          dst = true;
-      }
-      else if (previousSunday >= 8) // it is not Sunday and we are after the change to DST
-        dst = true;
-    }
-    //In November we must be before the first Sunday to be dst for USA.
-    //In this case we are changing time at 2:00 AM so since the change to the previous Sunday
-    //happens at midnight the previous Sunday is actually this Sunday at 2:00 AM
-    //That means the previous Sunday must be on or before the 7th.
-    if (RTCTime.month() == 11)   // November for the USA
-    {
-      if (RTCTime.dayOfTheWeek() == 0)   // if today is Sunday
-      {
-        if (previousSunday <= 7  // and it is also the first Sunday
-            && RTCTime.hour() <= 1)  // less than 2:00 AM
-          dst = true;
-      }
-      else if (previousSunday <= 0)   // it is not yet the first Sunday and the previous Sunday was before Nov 1
-        dst = true;
-    }
-  }
 
-  if (strcmp(rulesDST, "EU") == 0) {
+  switch(_rulesDST) {
+
+  case 1: // EU rules
     // Serial.print("test of rulesDST: ");
     // Serial.println(rulesDST);
     if (RTCTime.month() > 3 && RTCTime.month() < 10) dst = true; //DST is happening in Europe!
-    //In Europe in March, we are DST if the previous Sunday was on or after the 25th.
+    // In Europe in March, we are DST if the previous Sunday was on or after the 25th.
     if (RTCTime.month() == 3)
     {
       if (RTCTime.dayOfTheWeek() == 0)    // Today is Sunday
@@ -84,10 +52,10 @@ boolean DST_RTC::checkDST(DateTime RTCTime)
       else if (previousSunday >= 25) // if not Sunday and the last Sunday has passed
         dst = true;
     }
-    //In October we must be before the last Sunday to be in DST for Europe.
-    //In this case we are changing time at 2:00 AM so since the change to the previous Sunday
-    //happens at midnight the previous Sunday is actually this Sunday at 2:00 AM
-    //That means the previous Sunday must be on or before the 31st but after the 25th.
+    // In October we must be before the last Sunday to be in DST for Europe.
+    // In this case we are changing time at 2:00 AM so since the change to the previous Sunday
+    // happens at midnight the previous Sunday is actually this Sunday at 2:00 AM
+    // That means the previous Sunday must be on or before the 31st but after the 25th.
     if (RTCTime.month() == 10) // October for Europe
     {
       if (RTCTime.dayOfTheWeek() == 0)   // if today is Sunday
@@ -101,7 +69,42 @@ boolean DST_RTC::checkDST(DateTime RTCTime)
       else if // it is not Sunday
       (previousSunday < 25)
         dst = true;
+      };
+    break;
+  default: // US rules
+    // Serial.print("test of rulesDST: ");
+    // Serial.println(rulesDST);
+    if (RTCTime.month() > 3 && RTCTime.month() < 11) dst = true; //DST is happening in America!
+    // In the USA in March we are DST if the previous Sunday was on or after the 8th (and on or before the 14th).
+    if (RTCTime.month() == 3)
+    {
+      if (RTCTime.dayOfTheWeek() == 0) {  // if today is Sunday
+        if (previousSunday >= 8    // on or after 8th
+            && previousSunday <= 14     // but on or before 14th
+            && RTCTime.hour() >= 2)  // and at or after 2:00 AM
+          dst = true;
+        else if (previousSunday >= 15)  // it is a Sunday after the second Sunday
+          dst = true;
+      }
+      else if (previousSunday >= 8) // it is not Sunday and we are after the change to DST
+        dst = true;
     }
+    // In November we must be before the first Sunday to be dst for USA.
+    // In this case we are changing time at 2:00 AM so since the change to the previous Sunday
+    // happens at midnight the previous Sunday is actually this Sunday at 2:00 AM
+    // That means the previous Sunday must be on or before the 7th.
+    if (RTCTime.month() == 11)   // November for the USA
+    {
+      if (RTCTime.dayOfTheWeek() == 0)   // if today is Sunday
+      {
+        if (previousSunday <= 7  // and it is also the first Sunday
+            && RTCTime.hour() <= 1)  // less than 2:00 AM
+          dst = true;
+      }
+      else if (previousSunday <= 0)   // it is not yet the first Sunday and the previous Sunday was before Nov 1
+        dst = true;
+    }
+  break;
   }
   return dst;
 }

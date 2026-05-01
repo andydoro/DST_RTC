@@ -8,13 +8,16 @@
 #define Serial SERIAL_PORT_USBVIRTUAL
 #endif
 
-RTC_DS1307 rtc; // clock object
+RTC_DS3231 rtc;  // clock object with DS3231
+//RTC_DS1307 rtc;    // clock object with DS1307
 
-DST_RTC dst_rtc; // DST object
+DST_RTC dst_rtc(0);  // DST object
+// Optional argument to define ruleset. 0 will mean using US DST rules, use 1 for EU. Other rulesets can be added in the future.
 
+// The following code is deprecated. Library now defaults to US DST rules. Use 0 or 1 in setup() to use US or EU rules, respectively.
 // Define US or EU rules for DST comment out as required. More countries could be added with different rules in DST_RTC.cpp
-const char rulesDST[] = "US"; // US DST rules
-// const char rulesDST[] = "EU";   // EU DST rules
+// const char rulesDST[] = "US"; // US DST rules
+// const char rulesDST[] = "EU"; // EU DST rules
 
 void setup() {
   Serial.begin(115200);
@@ -22,45 +25,50 @@ void setup() {
   Wire.begin();
   rtc.begin();
 
-
   /*
     This line sets the RTC with an explicit date & time (standard time - not DST), for example to set
-    March 28, 2020 at 23:58:5 you would call:
-    // rtc.adjust(DateTime(2020, 3, 28, 23, 58, 5));
-    If used load the sketch a second time with this line commented out or the RTC will reset to
+    March 8, 2026 at 1:59:30 you would use:
+  */
+  // rtc.adjust(DateTime(2026, 3, 8, 1, 59, 30)); // This time is right before DST began in the US, so useful for testing.
+  
+  // or for March 29, 2026 at 1:59:30 you would use:
+  // rtc.adjust(DateTime(2026, 3, 29, 1, 59, 30)); // This time is right before DST began in the EU, so useful for testing.
+  /*
+    
+    If used, load the sketch a second time with this line commented out or the RTC will reset to
     this time on power up or reset.
   */
 
-  if (! rtc.isrunning()) {
+  
+  if (rtc.lostPower()) { // for DS3231
+  // if (!rtc.isrunning()) {  // for DS1307
     Serial.println("RTC is NOT running!");
     // following line sets the RTC to the date & time this sketch was compiled
     rtc.adjust(DateTime(__DATE__, __TIME__));
     // DST? If we're in it, let's subtract an hour from the RTC time to keep our DST calculation correct. This gives us
     // Standard Time which our DST check will add an hour back to if we're in DST.
     DateTime standardTime = rtc.now();
-    if (dst_rtc.checkDST(standardTime) == true) { // check whether we're in DST right now. If we are, subtract an hour.
+    if (dst_rtc.checkDST(standardTime) == true) {  // check whether we're in DST right now. If we are, subtract an hour.
       standardTime = standardTime.unixtime() - 3600;
     }
     rtc.adjust(standardTime);
   }
-
 }
 
 void loop() {
 
   DateTime standardTime = rtc.now();
 
-  Serial.println("Standard Time");
+  Serial.println("Standard Time:");
   printTheTime(standardTime);
 
-  DateTime theTime = dst_rtc.calculateTime(standardTime); // takes into account DST
+  DateTime theTime = dst_rtc.calculateTime(standardTime);  // takes into account DST
 
-  Serial.println("time adjusted for Daylight Saving Time");
+  Serial.println("time adjusted for Daylight Saving Time:");
   printTheTime(theTime);
 
-  delay(1000); // 1 second
+  delay(1000);  // 1 second
 }
-
 
 // print time to serial
 void printTheTime(DateTime theTimeP) {
