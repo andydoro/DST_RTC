@@ -13,8 +13,6 @@ The library can accept different DST rulesets and currently is programmed for ei
 
 In version 1.1.1 this ruleset selection was implemented poorly and required explicit definition of either "US" or "EU" ruleset. The new implementation in 1.2.0 uses integers to choose rulesets and defaults to "0" for the US ruleset. "1" can be entered for the EU ruleset. Version 1.2.0 is therefore backwards compatible with version 1.1.0.
 
-Version 1.2.1 has added Western Europe and Australia rulesets.
-
 - 0 - US - United States, default
 - 1 - EU - Central Europe
 - 2 - WE - Western Europe (Great Britain, Ireland and Portugal)
