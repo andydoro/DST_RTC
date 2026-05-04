@@ -111,7 +111,7 @@ boolean DST_RTC::checkDST(DateTime RTCTime) {
       }
       break;
 
-    case 3:  // Austrailia
+    case 3:  // Australia
       //    Serial.print("test of rulesDST: ");
       //    Serial.println(rulesDST);
       if (RTCTime.month() > 10 || RTCTime.month() < 4) dst = true;  //DST is happening in Australia!
