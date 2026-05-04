@@ -23,8 +23,7 @@ of writing DST is observed between the second Sunday in March and the first Sund
 
 For most of Europe DST usually begins on the last Sunday of March at 2:00 AM local time and ends on the last Sunday of October at 2:00 AM local time. The last Sunday of the month of March and October must always be on or after the 25th.
 
-The rules for DST vary by country and territory.
-https://en.wikipedia.org/wiki/Daylight_saving_time_by_country
+[The rules for DST vary by country and territory](https://en.wikipedia.org/wiki/Daylight_saving_time_by_country)
 
 
 Western Europe and Austrailia DST rulesets contrubuted by [Peter Bradley](https://github.com/Gambalunga)
